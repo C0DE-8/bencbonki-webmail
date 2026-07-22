@@ -1,20 +1,29 @@
+import axios from 'axios'
+
 const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000'
 export const API_URL = rawApiUrl.replace(/\/+$/, '')
 
+export const apiClient = axios.create({
+  baseURL: API_URL,
+  withCredentials: true,
+  headers: {
+    'Content-Type': 'application/json',
+  },
+})
+
 export async function api(path, options = {}) {
-  const response = await fetch(`${API_URL}${path}`, {
-    ...options,
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-      ...(options.headers || {}),
-    },
-  })
-  const data = await response.json().catch(() => ({}))
+  try {
+    const response = await apiClient.request({
+      url: path,
+      method: options.method || 'GET',
+      data: options.body ? JSON.parse(options.body) : options.data,
+      headers: options.headers,
+    })
 
-  if (!response.ok) {
-    throw new Error(data.error || 'Request failed')
+    return response.data
+  } catch (error) {
+    throw new Error(error.response?.data?.error || error.message || 'Request failed', {
+      cause: error,
+    })
   }
-
-  return data
 }
