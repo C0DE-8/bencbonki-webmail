@@ -1,6 +1,7 @@
 export function MailSidebar({
   activeMailbox,
   mailboxes,
+  onClose,
   onCompose,
   onLogout,
   onSelectMailbox,
@@ -8,6 +9,10 @@ export function MailSidebar({
 }) {
   return (
     <aside className="sidebar">
+      <button className="drawer-close icon-btn" type="button" onClick={onClose} title="Close menu">
+        x
+      </button>
+
       <div className="brand">
         <div className="brand-mark">B</div>
         <div>

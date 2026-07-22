@@ -5,12 +5,19 @@ export function MessageReader({
   loadingMessage,
   messageError,
   onBack,
+  onOpenMenu,
   selectedMessage,
   selectedSummary,
 }) {
   return (
     <article className="reader">
       <header className="mobile-reader-bar">
+        <button className="hamburger-btn" type="button" onClick={onOpenMenu} title="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
         <button className="secondary-btn" type="button" onClick={onBack}>
           Back
         </button>

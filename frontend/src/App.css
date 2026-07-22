@@ -123,6 +123,33 @@ button {
   font-weight: 900;
 }
 
+.hamburger-btn,
+.drawer-close,
+.drawer-scrim {
+  display: none;
+}
+
+.hamburger-btn {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border: 0;
+  border-radius: 6px;
+  background: #e8edf3;
+  cursor: pointer;
+  place-items: center;
+  gap: 4px;
+  padding: 10px;
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #263444;
+}
+
 .error {
   margin: 0;
   color: #b42318;
@@ -418,63 +445,100 @@ time {
 
 @media (max-width: 720px) {
   .mail-app {
-    grid-template-columns: 72px minmax(0, 1fr);
+    grid-template-columns: 1fr;
     min-height: 100dvh;
   }
 
   .sidebar {
-    position: sticky;
+    position: fixed;
     top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(82vw, 320px);
     height: 100dvh;
-    z-index: 2;
+    z-index: 20;
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    gap: 12px;
-    padding: 10px;
-    overflow: hidden;
+    gap: 18px;
+    padding: 18px;
+    overflow: auto;
+    box-shadow: 24px 0 70px rgba(9, 18, 28, 0.28);
+    transform: translateX(-105%);
+    transition: transform 180ms ease;
+  }
+
+  .mail-app.drawer-open .sidebar {
+    transform: translateX(0);
+  }
+
+  .drawer-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 19;
+    display: none;
+    border: 0;
+    background: rgba(9, 18, 28, 0.42);
+  }
+
+  .mail-app.drawer-open .drawer-scrim {
+    display: block;
+  }
+
+  .drawer-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: inline-grid;
+    place-items: center;
   }
 
   .brand {
-    justify-content: center;
+    justify-content: flex-start;
+    padding-right: 52px;
+  }
+
+  .brand div:not(.brand-mark) {
+    min-width: 0;
+    font-size: 14px;
+  }
+
+  .brand strong {
+    font-size: 15px;
+  }
+
+  .brand span {
+    font-size: 12px;
   }
 
   .brand-mark {
-    width: 44px;
-    height: 44px;
-  }
-
-  .brand div:not(.brand-mark),
-  .compose-btn,
-  .folders button,
-  .logout-btn {
-    font-size: 0;
-  }
-
-  .compose-btn,
-  .folders button,
-  .logout-btn {
-    width: 52px;
-    min-height: 48px;
-    padding: 0;
-    justify-content: center;
-  }
-
-  .compose-btn span,
-  .folders button span,
-  .logout-btn span {
-    font-size: 17px;
+    width: 42px;
+    height: 42px;
   }
 
   .folders {
     display: grid;
-    gap: 8px;
+    gap: 4px;
     overflow-y: auto;
     overflow-x: hidden;
   }
 
   .folders button {
+    width: 100%;
+    min-height: 42px;
+    font-size: 15px;
     white-space: nowrap;
+  }
+
+  .compose-btn,
+  .logout-btn {
+    width: 100%;
+    min-height: 44px;
+    font-size: 15px;
+  }
+
+  .hamburger-btn {
+    display: inline-grid;
   }
 
   .message-list,
@@ -494,6 +558,12 @@ time {
     height: auto;
     min-height: 70px;
     padding: 14px;
+    justify-content: flex-start;
+  }
+
+  .toolbar > div {
+    min-width: 0;
+    flex: 1;
   }
 
   .toolbar h1 {
@@ -537,6 +607,7 @@ time {
 
   .mobile-reader-bar span {
     min-width: 0;
+    flex: 1;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;

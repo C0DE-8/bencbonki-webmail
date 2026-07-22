@@ -5,6 +5,7 @@ export function MessageList({
   error,
   loadingMessages,
   messages,
+  onOpenMenu,
   onRefresh,
   onSelectMessage,
   selectedUid,
@@ -12,6 +13,12 @@ export function MessageList({
   return (
     <section className="message-list">
       <header className="toolbar">
+        <button className="hamburger-btn" type="button" onClick={onOpenMenu} title="Open menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
         <div>
           <p className="eyebrow">Mailbox</p>
           <h1>{activeMailbox}</h1>

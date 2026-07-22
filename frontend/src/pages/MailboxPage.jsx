@@ -22,6 +22,7 @@ export function MailboxPage() {
   const [error, setError] = useState('')
   const [messageError, setMessageError] = useState('')
   const [composeOpen, setComposeOpen] = useState(false)
+  const [drawerOpen, setDrawerOpen] = useState(false)
   const [mobileView, setMobileView] = useState('list')
   const isMobile = useIsMobile()
 
@@ -115,19 +116,29 @@ export function MailboxPage() {
   useEffect(() => {
     if (!isMobile) {
       setMobileView('list')
+      setDrawerOpen(false)
     }
   }, [isMobile])
 
   return (
-    <main className={`mail-app mobile-${mobileView}`}>
+    <main className={`mail-app mobile-${mobileView} ${drawerOpen ? 'drawer-open' : ''}`}>
+      <button
+        className="drawer-scrim"
+        type="button"
+        aria-label="Close menu"
+        onClick={() => setDrawerOpen(false)}
+      />
+
       <MailSidebar
         activeMailbox={activeMailbox}
         mailboxes={mailboxes}
+        onClose={() => setDrawerOpen(false)}
         onCompose={() => setComposeOpen(true)}
         onLogout={handleLogout}
         onSelectMailbox={(mailbox) => {
           setActiveMailbox(mailbox)
           setMobileView('list')
+          setDrawerOpen(false)
         }}
         user={user}
       />
@@ -137,6 +148,7 @@ export function MailboxPage() {
         error={error}
         loadingMessages={loadingMessages}
         messages={messages}
+        onOpenMenu={() => setDrawerOpen(true)}
         onRefresh={() => loadMessages(activeMailbox)}
         onSelectMessage={(uid) => {
           setSelectedUid(uid)
@@ -150,6 +162,7 @@ export function MailboxPage() {
         loadingMessage={loadingMessage}
         messageError={messageError}
         onBack={() => setMobileView('list')}
+        onOpenMenu={() => setDrawerOpen(true)}
         selectedMessage={selectedMessage}
         selectedSummary={selectedSummary}
       />
