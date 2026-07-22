@@ -28,6 +28,14 @@ function createSmtpTransport() {
   })
 }
 
+function createMessageBuilder() {
+  return nodemailer.createTransport({
+    streamTransport: true,
+    buffer: true,
+    newline: 'unix',
+  })
+}
+
 function addressList(addresses = []) {
   return addresses.map((address) => ({
     name: address.name || '',
@@ -147,6 +155,28 @@ async function listMailboxes() {
   }
 }
 
+function sentMailboxPath(boxes) {
+  const sentBox = boxes.find((box) => box.specialUse === '\\Sent')
+    || boxes.find((box) => /^sent$/i.test(box.name))
+    || boxes.find((box) => /sent/i.test(box.path))
+
+  return sentBox?.path || 'Sent'
+}
+
+async function appendToSent(rawMessage) {
+  const client = createImapClient()
+
+  try {
+    await client.connect()
+    const boxes = await client.list()
+    const path = sentMailboxPath(boxes)
+    await client.append(path, rawMessage, ['\\Seen'])
+    return path
+  } finally {
+    await client.logout().catch(() => {})
+  }
+}
+
 async function listMessages(mailboxPath, limit) {
   return withMailbox(mailboxPath, async (client, mailbox) => {
     if (!mailbox.exists) {
@@ -212,9 +242,9 @@ async function sendMessage({ to, cc, bcc, subject, text }) {
   }
 
   const transport = createSmtpTransport()
+  const builder = createMessageBuilder()
   const message = brandedMessage({ subject, text })
-
-  return transport.sendMail({
+  const mailOptions = {
     from: `"${config.name}" <${config.email}>`,
     to: recipients,
     cc: parseRecipients(cc),
@@ -226,7 +256,21 @@ async function sendMessage({ to, cc, bcc, subject, text }) {
       'X-Company': config.company,
       'X-Mailer': `${config.company} Webmail`,
     },
-  })
+  }
+  const rawMessage = await builder.sendMail(mailOptions)
+  const info = await transport.sendMail(mailOptions)
+  let savedToSent = null
+
+  try {
+    savedToSent = await appendToSent(rawMessage.message)
+  } catch (error) {
+    console.warn(`Unable to save message to Sent folder: ${error.message}`)
+  }
+
+  return {
+    ...info,
+    savedToSent,
+  }
 }
 
 module.exports = {

@@ -19,14 +19,23 @@ app.use(express.json({ limit: '1mb' }))
 app.get('/api/health', (req, res) => {
   res.json({ ok: true })
 })
+app.get('/health', (req, res) => {
+  res.json({ ok: true })
+})
 
 app.use('/api/auth', authRouter)
 app.use('/api', mailRouter)
+app.use('/auth', authRouter)
+app.use('/', mailRouter)
 
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' })
 })
 
-app.listen(port, () => {
-  console.log(`Mail API running on http://localhost:${port}`)
-})
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Mail API running on http://localhost:${port}`)
+  })
+}
+
+module.exports = app
