@@ -3,7 +3,6 @@ const { config, publicUser } = require('../lib/config')
 const {
   clearSessionCookie,
   createSession,
-  deleteSession,
   getSession,
   requireAuth,
   setSessionCookie,
@@ -19,14 +18,12 @@ router.post('/login', (req, res) => {
   }
 
   const token = createSession({ email: config.email, name: config.name })
-  setSessionCookie(res, token)
+  setSessionCookie(req, res, token)
   return res.json({ user: publicUser() })
 })
 
-router.post('/logout', requireAuth, (req, res) => {
-  const { token } = getSession(req)
-  deleteSession(token)
-  clearSessionCookie(res)
+router.post('/logout', (req, res) => {
+  clearSessionCookie(req, res)
   res.json({ ok: true })
 })
 

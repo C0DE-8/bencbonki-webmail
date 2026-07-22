@@ -418,31 +418,63 @@ time {
 
 @media (max-width: 720px) {
   .mail-app {
-    grid-template-columns: 1fr;
+    grid-template-columns: 72px minmax(0, 1fr);
     min-height: 100dvh;
   }
 
   .sidebar {
     position: sticky;
     top: 0;
+    height: 100dvh;
     z-index: 2;
-    display: grid;
-    grid-template-columns: 1fr auto auto;
-    align-items: center;
-    gap: 10px;
-    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 10px;
+    overflow: hidden;
+  }
+
+  .brand {
+    justify-content: center;
+  }
+
+  .brand-mark {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand div:not(.brand-mark),
+  .compose-btn,
+  .folders button,
+  .logout-btn {
+    font-size: 0;
+  }
+
+  .compose-btn,
+  .folders button,
+  .logout-btn {
+    width: 52px;
+    min-height: 48px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .compose-btn span,
+  .folders button span,
+  .logout-btn span {
+    font-size: 17px;
   }
 
   .folders {
-    grid-column: 1 / -1;
-    display: flex;
-    overflow-x: auto;
+    display: grid;
+    gap: 8px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .folders button {
-    width: auto;
     white-space: nowrap;
-    font-size: 14px;
   }
 
   .message-list,
@@ -490,7 +522,7 @@ time {
   }
 
   .reader {
-    min-height: calc(100dvh - 132px);
+    min-height: 100dvh;
   }
 
   .mobile-reader-bar {
