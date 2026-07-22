@@ -1,5 +1,6 @@
 .loading-screen,
-.login-shell {
+.login-shell,
+.not-found-shell {
   min-height: 100svh;
   display: grid;
   place-items: center;
@@ -7,7 +8,8 @@
   background: #eef2f6;
 }
 
-.login-panel {
+.login-panel,
+.not-found-panel {
   width: min(100%, 420px);
   display: grid;
   gap: 18px;
@@ -19,15 +21,27 @@
 }
 
 .login-panel h1,
+.not-found-panel h1,
 .toolbar h1,
 .reader h2 {
   margin: 0;
   color: #17202a;
 }
 
-.login-panel h1 {
+.login-panel h1,
+.not-found-panel h1 {
   font-size: 30px;
   line-height: 1.1;
+}
+
+.not-found-copy {
+  margin: 0;
+  color: #596878;
+}
+
+.not-found-link {
+  min-height: 44px;
+  text-decoration: none;
 }
 
 .eyebrow {
