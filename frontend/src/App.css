@@ -1,0 +1,533 @@
+.loading-screen,
+.login-shell {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #eef2f6;
+}
+
+.login-panel {
+  width: min(100%, 420px);
+  display: grid;
+  gap: 18px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #d9e0e8;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(21, 32, 43, 0.12);
+}
+
+.login-panel h1,
+.toolbar h1,
+.reader h2 {
+  margin: 0;
+  color: #17202a;
+}
+
+.login-panel h1 {
+  font-size: 30px;
+  line-height: 1.1;
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #68788a;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+label {
+  display: grid;
+  gap: 8px;
+  color: #334155;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+}
+
+input,
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #cfd8e3;
+  border-radius: 6px;
+  padding: 11px 12px;
+  color: #17202a;
+  background: #ffffff;
+  font: inherit;
+}
+
+textarea {
+  min-height: 220px;
+  resize: vertical;
+}
+
+button {
+  font: inherit;
+}
+
+.primary-btn,
+.secondary-btn,
+.compose-btn,
+.logout-btn,
+.icon-btn {
+  border: 0;
+  border-radius: 6px;
+  min-height: 40px;
+  cursor: pointer;
+}
+
+.primary-btn,
+.compose-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ffffff;
+  background: #1264a3;
+  font-weight: 800;
+}
+
+.primary-btn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.secondary-btn,
+.logout-btn,
+.icon-btn {
+  color: #263444;
+  background: #e8edf3;
+}
+
+.icon-btn {
+  width: 40px;
+  flex: 0 0 40px;
+  font-weight: 900;
+}
+
+.error {
+  margin: 0;
+  color: #b42318;
+  background: #fff1f0;
+  border: 1px solid #ffccc7;
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: left;
+  font-size: 14px;
+}
+
+.error.inline {
+  margin: 0 16px 12px;
+}
+
+.mail-app {
+  min-height: 100svh;
+  display: grid;
+  grid-template-columns: 260px minmax(320px, 430px) minmax(0, 1fr);
+  color: #243142;
+  background: #f5f7fa;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 18px;
+  background: #16202b;
+  color: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  background: #2f9c95;
+  font-weight: 900;
+}
+
+.brand strong,
+.brand span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand span {
+  color: #a9b7c7;
+  font-size: 12px;
+}
+
+.folders {
+  display: grid;
+  gap: 4px;
+  min-height: 0;
+  overflow: auto;
+}
+
+.folders button,
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  color: #dce5ef;
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.folders button.active {
+  color: #ffffff;
+  background: #263444;
+}
+
+.logout-btn {
+  margin-top: auto;
+  background: #22303f;
+}
+
+.message-list,
+.reader {
+  min-width: 0;
+  border-right: 1px solid #d9e0e8;
+  background: #ffffff;
+}
+
+.toolbar {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0 16px;
+  border-bottom: 1px solid #d9e0e8;
+}
+
+.toolbar h1 {
+  font-size: 24px;
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+.messages {
+  display: grid;
+}
+
+.message-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 12px;
+  padding: 14px 16px;
+  border: 0;
+  border-bottom: 1px solid #edf1f5;
+  background: #ffffff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.message-row.selected {
+  background: #e8f2fb;
+}
+
+.message-row.unread .sender,
+.message-row.unread .subject {
+  font-weight: 900;
+}
+
+.sender,
+.subject {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sender {
+  color: #17202a;
+  font-weight: 700;
+}
+
+.subject {
+  grid-column: 1 / -1;
+  color: #596878;
+  font-size: 14px;
+}
+
+time {
+  color: #76869a;
+  font-size: 12px;
+}
+
+.reader {
+  display: flex;
+  flex-direction: column;
+  border-right: 0;
+}
+
+.mobile-reader-bar {
+  display: none;
+}
+
+.reader-head {
+  padding: 24px;
+  border-bottom: 1px solid #d9e0e8;
+}
+
+.reader h2 {
+  font-size: 26px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.meta {
+  display: grid;
+  gap: 6px;
+  margin-top: 14px;
+  color: #596878;
+  font-size: 14px;
+}
+
+.body {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: 24px;
+}
+
+.body iframe {
+  width: 100%;
+  min-height: 70svh;
+  border: 0;
+  background: #ffffff;
+}
+
+.body pre {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin: 0;
+  font: 15px/1.6 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.empty {
+  margin: 24px 16px;
+  color: #68788a;
+}
+
+.reader-empty {
+  align-self: center;
+  margin: auto;
+}
+
+.compose-backdrop {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 24px;
+  background: rgba(9, 18, 28, 0.32);
+}
+
+.compose {
+  width: min(100%, 620px);
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  background: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 24px 70px rgba(9, 18, 28, 0.28);
+}
+
+.compose header,
+.compose footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.compose h2 {
+  margin: 0;
+  color: #17202a;
+  font-size: 20px;
+}
+
+.compose footer {
+  justify-content: flex-end;
+}
+
+.compose .primary-btn,
+.compose .secondary-btn {
+  padding: 0 16px;
+}
+
+@media (max-width: 980px) {
+  .mail-app {
+    grid-template-columns: 86px minmax(250px, 42vw) minmax(0, 1fr);
+  }
+
+  .brand div:not(.brand-mark),
+  .compose-btn,
+  .folders button,
+  .logout-btn {
+    font-size: 0;
+  }
+
+  .compose-btn,
+  .folders button,
+  .logout-btn {
+    justify-content: center;
+  }
+
+  .compose-btn span,
+  .folders button span,
+  .logout-btn span {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 720px) {
+  .mail-app {
+    grid-template-columns: 1fr;
+    min-height: 100dvh;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .folders {
+    grid-column: 1 / -1;
+    display: flex;
+    overflow-x: auto;
+  }
+
+  .folders button {
+    width: auto;
+    white-space: nowrap;
+    font-size: 14px;
+  }
+
+  .message-list,
+  .reader {
+    border-right: 0;
+  }
+
+  .mail-app.mobile-reader .message-list {
+    display: none;
+  }
+
+  .mail-app.mobile-list .reader {
+    display: none;
+  }
+
+  .toolbar {
+    height: auto;
+    min-height: 70px;
+    padding: 14px;
+  }
+
+  .toolbar h1 {
+    font-size: 20px;
+  }
+
+  .message-row {
+    min-height: 76px;
+    padding: 14px;
+  }
+
+  .sender,
+  .subject {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .sender {
+    -webkit-line-clamp: 1;
+  }
+
+  .subject {
+    -webkit-line-clamp: 2;
+  }
+
+  .reader {
+    min-height: calc(100dvh - 132px);
+  }
+
+  .mobile-reader-bar {
+    min-height: 56px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1px solid #d9e0e8;
+    background: #ffffff;
+  }
+
+  .mobile-reader-bar span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #596878;
+    font-weight: 700;
+  }
+
+  .mobile-reader-bar .secondary-btn {
+    padding: 0 14px;
+  }
+
+  .reader-head,
+  .body {
+    padding: 18px 14px;
+  }
+
+  .reader h2 {
+    font-size: 22px;
+  }
+
+  .body iframe {
+    min-height: 62dvh;
+  }
+
+  .compose-backdrop {
+    align-items: stretch;
+    padding: 0;
+    background: rgba(9, 18, 28, 0.45);
+  }
+
+  .compose {
+    width: 100%;
+    min-height: 100dvh;
+    border-radius: 0;
+  }
+
+  .compose textarea {
+    min-height: 34dvh;
+  }
+}
