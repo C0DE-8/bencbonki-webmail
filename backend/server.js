@@ -8,19 +8,9 @@ const mailRouter = require('./routers/mail.router')
 const app = express()
 const port = Number(process.env.PORT || 4000)
 
-const allowedOrigins = new Set([
-  process.env.FRONTEND_ORIGIN || 'http://localhost:5173',
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-])
-
 app.use(cors({
   origin(origin, callback) {
-    if (!origin || allowedOrigins.has(origin)) {
-      return callback(null, true)
-    }
-
-    return callback(new Error('Origin not allowed by CORS'))
+    return callback(null, origin || true)
   },
   credentials: true,
 }))
