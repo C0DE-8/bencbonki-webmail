@@ -94,7 +94,9 @@ function createSession(user) {
 }
 
 function getSession(req) {
-  const token = parseCookies(req.headers.cookie).mail_session
+  const authorization = req.headers.authorization || ''
+  const bearerToken = authorization.startsWith('Bearer ') ? authorization.slice(7).trim() : ''
+  const token = bearerToken || parseCookies(req.headers.cookie).mail_session
   const session = readSignedPayload(token)
 
   return {

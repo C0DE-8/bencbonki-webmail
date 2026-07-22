@@ -19,7 +19,7 @@ router.post('/login', (req, res) => {
 
   const token = createSession({ email: config.email, name: config.name })
   setSessionCookie(req, res, token)
-  return res.json({ user: publicUser() })
+  return res.json({ token, user: publicUser() })
 })
 
 router.post('/logout', (req, res) => {

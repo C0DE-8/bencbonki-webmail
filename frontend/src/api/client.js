@@ -1,6 +1,7 @@
 import axios from 'axios'
 
 const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:4000'
+const tokenKey = 'bencbonki_mail_token'
 export const API_URL = rawApiUrl.replace(/\/+$/, '')
 
 export const apiClient = axios.create({
@@ -10,6 +11,23 @@ export const apiClient = axios.create({
     'Content-Type': 'application/json',
   },
 })
+
+export function getAuthToken() {
+  return window.localStorage.getItem(tokenKey)
+}
+
+export function setAuthToken(token) {
+  if (token) {
+    window.localStorage.setItem(tokenKey, token)
+    apiClient.defaults.headers.common.Authorization = `Bearer ${token}`
+    return
+  }
+
+  window.localStorage.removeItem(tokenKey)
+  delete apiClient.defaults.headers.common.Authorization
+}
+
+setAuthToken(getAuthToken())
 
 export async function api(path, options = {}) {
   try {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { api } from '../api/client'
+import { api, setAuthToken } from '../api/client'
 import { AuthContext } from './auth-context'
 
 export function AuthProvider({ children }) {
@@ -8,8 +8,17 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     api('/api/auth/session')
-      .then((data) => setUser(data.user))
-      .catch(() => setUser(null))
+      .then((data) => {
+        if (!data.user) {
+          setAuthToken(null)
+        }
+
+        setUser(data.user)
+      })
+      .catch(() => {
+        setAuthToken(null)
+        setUser(null)
+      })
       .finally(() => setBooting(false))
   }, [])
 
@@ -18,12 +27,14 @@ export function AuthProvider({ children }) {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     })
+    setAuthToken(data.token)
     setUser(data.user)
     return data.user
   }, [])
 
   const logout = useCallback(async () => {
     await api('/api/auth/logout', { method: 'POST' }).catch(() => {})
+    setAuthToken(null)
     setUser(null)
   }, [])
 
